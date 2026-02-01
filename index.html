@@ -3,189 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite person ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Valentine's Grand Prix 🏎️💨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --pink: #ff4d6d; --soft: #ffb3c1; --bg: #fff0f3; }
+        :root { --hot-orange: #ff4d00; --blue: #0056b3; --pink: #ff4d6d; --bg: #1a1a1a; }
         body {
             margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
             background: var(--bg); display: flex; justify-content: center;
-            align-items: center; height: 100vh; overflow: hidden; text-align: center;
-        }
-
-        /* Custom Heart Cursor */
-        #cursor {
-            width: 20px; height: 20px; background: var(--pink);
-            position: fixed; border-radius: 50%; pointer-events: none;
-            z-index: 999; transform: translate(-50%, -50%); opacity: 0.6;
+            align-items: center; height: 100vh; overflow: hidden; color: white;
         }
 
         .container {
-            background: white; padding: 30px; border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
-            max-width: 450px; width: 90%; z-index: 10;
+            background: #222; padding: 30px; border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 77, 0, 0.4);
+            max-width: 450px; width: 90%; border: 3px solid var(--hot-orange);
         }
 
-        h1 { font-family: 'Pacifico', cursive; color: var(--pink); margin-bottom: 10px; }
+        h1 { font-family: 'Bungee', cursive; color: var(--hot-orange); text-transform: uppercase; }
         .hidden { display: none !important; }
 
-        /* Buttons */
+        /* Stage 1 Buttons */
         .btn {
-            padding: 12px 25px; border: none; border-radius: 50px;
-            cursor: pointer; font-size: 1rem; font-weight: 600;
-            transition: 0.3s; margin: 10px;
+            padding: 15px 30px; border: none; border-radius: 5px;
+            cursor: pointer; font-size: 1.1rem; font-weight: bold;
+            transition: 0.2s; text-transform: uppercase;
         }
-        .btn-yes { background: var(--pink); color: white; box-shadow: 0 4px 15px var(--soft); }
-        .btn-no { background: #eee; color: #888; position: absolute; }
+        .btn-yes { background: var(--hot-orange); color: white; box-shadow: 0 5px 0 #b33600; }
+        .btn-yes:active { transform: translateY(3px); box-shadow: 0 2px 0 #b33600; }
+        .btn-no { background: #444; color: #888; position: absolute; }
 
-        /* Memory Cards */
-        .card-stack {
-            position: relative; height: 150px; display: flex;
-            justify-content: center; align-items: center; margin-top: 20px;
-        }
+        /* Card Shuffle */
+        .card-stack { position: relative; height: 180px; margin: 20px 0; }
         .memory-card {
-            position: absolute; background: var(--soft); color: white;
-            padding: 20px; border-radius: 15px; width: 80%;
-            transform: rotate(calc(var(--r) * 1deg));
-            transition: 0.5s; cursor: pointer; border: 2px solid white;
+            position: absolute; background: #333; color: var(--hot-orange);
+            padding: 25px; border-radius: 10px; width: 85%; left: 2.5%;
+            border: 2px solid var(--hot-orange); cursor: pointer;
+            transition: transform 0.4s, opacity 0.4s; font-weight: bold;
         }
-        .memory-card:hover { transform: translateY(-10px) rotate(0deg); z-index: 20; }
 
-        /* Game Target */
-        #game-target { font-size: 60px; cursor: pointer; transition: 0.1s; user-select: none; }
+        /* Racing Game */
+        #game-canvas {
+            background: #333; border: 2px solid var(--hot-orange);
+            display: block; margin: 10px auto; border-radius: 10px;
+            background-image: linear-gradient(#444 2px, transparent 2px);
+            background-size: 100% 40px;
+        }
+        .controls { font-size: 0.8rem; color: #aaa; margin-top: 5px; }
 
         /* Confetti */
-        .confetti {
-            position: absolute; width: 8px; height: 8px;
-            animation: fall 3s linear forwards; z-index: 100;
-        }
-        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-        
-        @keyframes trophyGlow {
-            from { filter: drop-shadow(0 0 10px gold); }
-            to { filter: drop-shadow(0 0 30px #ffb703); }
-        }
+        .confetti { position: absolute; width: 10px; height: 10px; animation: fall 3s linear forwards; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div>
-
     <div id="stage1" class="container">
-        <h1>Will you be my Valentine baby?</h1>
-        <div style="height: 120px; position: relative; margin-top: 20px;">
+        <h1>Player 1 Ready?</h1>
+        <p>Will you be my Valentine?</p>
+        <div style="height: 120px; position: relative;">
             <button class="btn btn-yes" onclick="nextStage(2)">YES!</button>
             <button id="noBtn" class="btn btn-no" onmouseover="moveNo()">No</button>
         </div>
     </div>
 
     <div id="stage2" class="container hidden">
-        <h1>I knew it! 😉</h1>
-        <p>No escaping me. Now, read this...</p>
-        <div style="background: #fffafa; padding: 20px; border-left: 5px solid var(--pink); border-radius: 10px; text-align: left;">
-            <p>Thank you for coming into my life. You make everything brighter and my heart is so incredibly full because of you. Thank you for always being there for me in my ups and Downs.I LOVE YOU SO MUCH TEDDY.❤️</p>
+        <h1>Unlocked! 🔓</h1>
+        <p>I knew you'd say yes. No escaping me!</p>
+        <div style="background: #333; padding: 15px; border-radius: 10px; border-left: 5px solid var(--hot-orange); text-align: left;">
+            <p>Thank you for coming into my life. You're my favorite teammate and my best friend. ❤️</p>
         </div>
-        <button class="btn btn-yes" onclick="nextStage(3)">See Why I Love You →</button>
+        <button class="btn btn-yes" style="margin-top:20px" onclick="nextStage(3)">Review Log</button>
     </div>
 
     <div id="stage3" class="container hidden">
-        <h1>Reasons I Love You</h1>
-        <p style="font-size: 0.8rem; color: #888;">(Click the cards to shuffle!)</p>
-    
-        <div class="card-stack" id="cardStack" style="height: 200px; position: relative; margin: 20px 0;">
-        <div class="memory-card" onclick="shuffleCard(this)">You always know how to make me laugh.</div>
-        <div class="memory-card" onclick="shuffleCard(this)">You are my safest, happiest place.</div>
-        <div class="memory-card" onclick="shuffleCard(this)">I love the way you look at me.</div>
-        <div class="memory-card" onclick="shuffleCard(this)">You support my dreams no matter what.</div>
-        <div class="memory-card" onclick="shuffleCard(this)">Simply because you are YOU. ❤️</div>
+        <h1>Why You're #1</h1>
+        <div class="card-stack" id="cardStack">
+            <div class="memory-card" onclick="shuffleCard(this)">Your passion for things you love.</div>
+            <div class="memory-card" onclick="shuffleCard(this)">How you always make me feel safe.</div>
+            <div class="memory-card" onclick="shuffleCard(this)">Our late night gaming sessions.</div>
+            <div class="memory-card" onclick="shuffleCard(this)">You are my favorite Hot Wheels car. 🔥</div>
+        </div>
+        <button class="btn btn-yes" onclick="nextStage(4)">Start Race</button>
     </div>
 
-    <button class="btn btn-yes" onclick="nextStage(4)">Now, a mini-challenge!</button>
-</div>
-
-<style>
-    /* Add this updated CSS for the cards */
-    .memory-card {
-        position: absolute;
-        background: var(--pink);
-        color: white;
-        padding: 30px 20px;
-        border-radius: 20px;
-        width: 80%;
-        left: 5%;
-        cursor: pointer;
-        transition: transform 0.5s, z-index 0.5s;
-        border: 3px solid white;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 600;
-        user-select: none;
-    }
-</style>
-
-<script>
-    // Add this function to your script
-    function shuffleCard(card) {
-        // Animation: Fly out to the right and fade
-        card.style.transform = "translateX(150%) rotate(30deg)";
-        card.style.opacity = "0";
-        
-        setTimeout(() => {
-            // Move to back of stack
-            card.style.zIndex = -1;
-            card.parentNode.prepend(card);
-            
-            // Slide back in behind others
-            setTimeout(() => {
-                card.style.transform = "translateX(0) rotate(0deg)";
-                card.style.opacity = "1";
-                // Reset z-indexes of all cards to maintain stack
-                const cards = document.querySelectorAll('.memory-card');
-                cards.forEach((c, i) => {
-                    c.style.zIndex = i;
-                });
-            }, 50);
-        }, 300);
-    }
-
-    // Initialize the z-index so they stack correctly at start
-    document.querySelectorAll('.memory-card').forEach((c, i) => {
-        c.style.zIndex = i;
-    });
-</script>
-
-
     <div id="stage4" class="container hidden">
-        <h1>Catch the Heart!</h1>
-        <div id="score" style="color: var(--pink); font-weight: bold;">Hearts Caught: 0/5</div>
-        <div style="height: 150px; display: flex; justify-content: center; align-items: center;">
-            <div id="game-target" onclick="catchHeart()">💝</div>
-        </div>
+        <h1>Valentine Drift</h1>
+        <p>Collect 10 Hearts to win!</p>
+        <canvas id="game-canvas" width="300" height="300"></canvas>
+        <div id="game-score" style="color: var(--hot-orange); font-weight: bold;">Hearts: 0/10</div>
+        <p class="controls">Click/Tap Left or Right to move!</p>
     </div>
 
     <div id="stage5" class="container hidden">
-        <h1 style="font-size: 4rem; animation: trophyGlow 1s infinite alternate;">🏆</h1>
-        <h1 style="margin: 0;">OFFICIALLY...</h1>
-        <p style="font-size: 1.3rem;">The <strong>Best Boyfriend</strong> in the World.</p>
-        <p>I love you to the moon and back!    HAPPY VALENTINE'S DAY TEDDY!!!!!!</p>
+        <h1 style="font-size: 3rem;">🥇</h1>
+        <h1>NEW HIGH SCORE!</h1>
+        <p>You are officially the</p>
+        <h2 style="color: var(--hot-orange);">BEST BOYFRIEND IN THE WORLD</h2>
+        <p>❤️ 🏎️💨 ❤️</p>
     </div>
 
     <script>
-        let score = 0;
-        const cursor = document.getElementById('cursor');
-
-        // Custom Cursor Movement
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
+        let currentStage = 1;
+        
         function nextStage(n) {
             document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
             document.getElementById('stage' + n).classList.remove('hidden');
             if (n === 2 || n === 5) spawnConfetti();
+            if (n === 4) initGame();
         }
 
         function moveNo() {
@@ -194,23 +118,75 @@
             btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
         }
 
-        function catchHeart() {
-            score++;
-            document.getElementById('score').innerText = `Hearts Caught: ${score}/5`;
-            if (score >= 5) {
-                nextStage(5);
-            } else {
-                const target = document.getElementById('game-target');
-                target.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*100-50}px)`;
+        function shuffleCard(card) {
+            card.style.transform = "translateX(150%) rotate(30deg)";
+            card.style.opacity = "0";
+            setTimeout(() => {
+                card.style.zIndex = -1;
+                card.parentNode.prepend(card);
+                setTimeout(() => {
+                    card.style.transform = "translateX(0) rotate(0deg)";
+                    card.style.opacity = "1";
+                    document.querySelectorAll('.memory-card').forEach((c, i) => c.style.zIndex = i);
+                }, 50);
+            }, 300);
+        }
+
+        // --- RACING GAME LOGIC ---
+        function initGame() {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            let score = 0;
+            let carX = 135;
+            let hearts = [];
+
+            function spawnHeart() {
+                hearts.push({ x: Math.random() * 260 + 20, y: -20 });
             }
+
+            canvas.addEventListener('mousedown', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                if (clickX < 150) carX = Math.max(20, carX - 40);
+                else carX = Math.min(250, carX + 40);
+            });
+
+            function update() {
+                ctx.clearRect(0, 0, 300, 300);
+                
+                // Draw Car (Hot Wheels Style)
+                ctx.fillStyle = "#ff4d00";
+                ctx.fillRect(carX, 240, 30, 50);
+                ctx.fillStyle = "white";
+                ctx.fillRect(carX + 5, 245, 20, 10); // Windshield
+
+                // Draw Hearts
+                hearts.forEach((h, i) => {
+                    h.y += 4;
+                    ctx.font = "20px Arial";
+                    ctx.fillText("❤️", h.x, h.y);
+
+                    // Collision
+                    if (h.y > 240 && h.y < 290 && h.x > carX - 10 && h.x < carX + 30) {
+                        hearts.splice(i, 1);
+                        score++;
+                        document.getElementById('game-score').innerText = `Hearts: ${score}/10`;
+                        if (score >= 10) nextStage(5);
+                    }
+                });
+
+                if (Math.random() < 0.03) spawnHeart();
+                if (score < 10) requestAnimationFrame(update);
+            }
+            update();
         }
 
         function spawnConfetti() {
-            for (let i = 0; i < 70; i++) {
+            for (let i = 0; i < 50; i++) {
                 const c = document.createElement('div');
                 c.className = 'confetti';
                 c.style.left = Math.random() * 100 + 'vw';
-                c.style.background = ['#ff4d6d', '#ffb3c1', '#ffd700'][Math.floor(Math.random()*3)];
+                c.style.background = ['#ff4d00', '#ff4d6d', '#ffd700'][Math.floor(Math.random()*3)];
                 c.style.top = '-10px';
                 c.style.animationDelay = Math.random() * 2 + 's';
                 document.body.appendChild(c);
@@ -220,5 +196,3 @@
     </script>
 </body>
 </html>
-
-            
