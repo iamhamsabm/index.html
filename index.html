@@ -89,15 +89,73 @@
     </div>
 
     <div id="stage3" class="container hidden">
-        <h1>3 Random Reasons...</h1>
-        <div class="card-stack">
-            <div class="memory-card" style="--r: -5; z-index: 3;">How you make me as your 1st priority :)</div>
-            <div class="memory-card" style="--r: 2; z-index: 2;">How you care for me</div>
-            <div class="memory-card" style="--r: 5; z-index: 1;">You're my first ever boy best friend</div>
-        </div>
-        <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">(Hover over them!)</p>
-        <button class="btn btn-yes" onclick="nextStage(4)">Now, a mini-challenge!</button>
+        <h1>Reasons I Love You</h1>
+        <p style="font-size: 0.8rem; color: #888;">(Click the cards to shuffle!)</p>
+    
+        <div class="card-stack" id="cardStack" style="height: 200px; position: relative; margin: 20px 0;">
+        <div class="memory-card" onclick="shuffleCard(this)">You always know how to make me laugh.</div>
+        <div class="memory-card" onclick="shuffleCard(this)">You are my safest, happiest place.</div>
+        <div class="memory-card" onclick="shuffleCard(this)">I love the way you look at me.</div>
+        <div class="memory-card" onclick="shuffleCard(this)">You support my dreams no matter what.</div>
+        <div class="memory-card" onclick="shuffleCard(this)">Simply because you are YOU. ❤️</div>
     </div>
+
+    <button class="btn btn-yes" onclick="nextStage(4)">Now, a mini-challenge!</button>
+</div>
+
+<style>
+    /* Add this updated CSS for the cards */
+    .memory-card {
+        position: absolute;
+        background: var(--pink);
+        color: white;
+        padding: 30px 20px;
+        border-radius: 20px;
+        width: 80%;
+        left: 5%;
+        cursor: pointer;
+        transition: transform 0.5s, z-index 0.5s;
+        border: 3px solid white;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        user-select: none;
+    }
+</style>
+
+<script>
+    // Add this function to your script
+    function shuffleCard(card) {
+        // Animation: Fly out to the right and fade
+        card.style.transform = "translateX(150%) rotate(30deg)";
+        card.style.opacity = "0";
+        
+        setTimeout(() => {
+            // Move to back of stack
+            card.style.zIndex = -1;
+            card.parentNode.prepend(card);
+            
+            // Slide back in behind others
+            setTimeout(() => {
+                card.style.transform = "translateX(0) rotate(0deg)";
+                card.style.opacity = "1";
+                // Reset z-indexes of all cards to maintain stack
+                const cards = document.querySelectorAll('.memory-card');
+                cards.forEach((c, i) => {
+                    c.style.zIndex = i;
+                });
+            }, 50);
+        }, 300);
+    }
+
+    // Initialize the z-index so they stack correctly at start
+    document.querySelectorAll('.memory-card').forEach((c, i) => {
+        c.style.zIndex = i;
+    });
+</script>
+
 
     <div id="stage4" class="container hidden">
         <h1>Catch the Heart!</h1>
