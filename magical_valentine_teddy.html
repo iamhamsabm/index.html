@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine’s Day, Teddy ❤️</title>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 3em;
+    text-shadow: 0 0 15px #ff004f, 0 0 30px #ff77aa, 0 0 45px #ff004f;
+    animation: pulse 2s infinite;
+}
+
+p {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+/* Floating icons */
+.float {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.8;
+    animation: floatUp 8s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* Pulse effect for h1 */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: white;
+    opacity: 0.8;
+    top: -10px;
+    pointer-events: none;
+    animation: fall linear forwards;
+    border-radius: 50%;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Dark_Ambient/Komiku_-_12_-_Dark_Souls.mp3" type="audio/mpeg">
+</audio>
+
+<h1>Happy Valentine’s Day, Teddy ❤️</h1>
+<p>Sending you lots of love and hugs 💖</p>
+
+<div id="heartsContainer"></div>
+
+<script>
+// Floating icons
+const icons = ["🫂","🧿","😘","❤️‍🩹","🫶","🎮","🦸‍♂️","🧸"];
+const container = document.getElementById("heartsContainer");
+for(let i=0;i<20;i++){
+    const icon = document.createElement("div");
+    icon.className = "float";
+    icon.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+    icon.style.left = Math.random()*90 + "vw";
+    icon.style.fontSize = (25 + Math.random()*25) + "px";
+    icon.style.animationDuration = (5 + Math.random()*5) + "s";
+    container.appendChild(icon);
+}
+
+// Confetti
+function createConfetti(){
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random()*100 + "vw";
+    confetti.style.background = `hsl(${Math.random()*360}, 100%, 75%)`;
+    confetti.style.width = (5 + Math.random()*10) + "px";
+    confetti.style.height = confetti.style.width;
+    confetti.style.animationDuration = (3 + Math.random()*5) + "s";
+    document.body.appendChild(confetti);
+    setTimeout(()=> confetti.remove(), 6000);
+}
+
+// Generate confetti continuously
+setInterval(createConfetti, 200);
+</script>
+
+</body>
+</html>
