@@ -3,149 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Valentine Surprise for you ❤️</title>
+    <title>For My Favorite person ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --paper: #ffffff;
-            --envelope-outside: #d00000;
-            --envelope-inside: #9d0208;
-            --bg-gradient: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-        }
-
+        :root { --pink: #ff4d6d; --soft: #ffb3c1; --bg: #fff0f3; }
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: var(--bg-gradient);
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Georgia', serif;
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+            background: var(--bg); display: flex; justify-content: center;
+            align-items: center; height: 100vh; overflow: hidden; text-align: center;
         }
 
-        #confetti-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
+        /* Custom Heart Cursor */
+        #cursor {
+            width: 20px; height: 20px; background: var(--pink);
+            position: fixed; border-radius: 50%; pointer-events: none;
+            z-index: 999; transform: translate(-50%, -50%); opacity: 0.6;
         }
 
-        .envelope-wrapper {
-            position: relative;
-            cursor: pointer;
-            perspective: 1000px;
+        .container {
+            background: white; padding: 30px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            max-width: 450px; width: 90%; z-index: 10;
         }
 
-        .envelope {
-            position: relative;
-            width: 320px;
-            height: 220px;
-            background-color: var(--envelope-outside);
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            z-index: 1;
+        h1 { font-family: 'Pacifico', cursive; color: var(--pink); margin-bottom: 10px; }
+        .hidden { display: none !important; }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px; border: none; border-radius: 50px;
+            cursor: pointer; font-size: 1rem; font-weight: 600;
+            transition: 0.3s; margin: 10px;
         }
+        .btn-yes { background: var(--pink); color: white; box-shadow: 0 4px 15px var(--soft); }
+        .btn-no { background: #eee; color: #888; position: absolute; }
 
-        .envelope::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            z-index: 4;
-            border-top: 130px solid var(--envelope-outside);
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            transform-origin: top;
-            transition: transform 0.6s ease;
+        /* Memory Cards */
+        .card-stack {
+            position: relative; height: 150px; display: flex;
+            justify-content: center; align-items: center; margin-top: 20px;
         }
-
-        .letter {
-            position: absolute;
-            bottom: 5px;
-            left: 10px;
-            width: 300px;
-            height: 200px;
-            background: var(--paper);
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: transform 0.6s ease, z-index 0.6s;
-            z-index: 2;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .memory-card {
+            position: absolute; background: var(--soft); color: white;
+            padding: 20px; border-radius: 15px; width: 80%;
+            transform: rotate(calc(var(--r) * 1deg));
+            transition: 0.5s; cursor: pointer; border: 2px solid white;
         }
+        .memory-card:hover { transform: translateY(-10px) rotate(0deg); z-index: 20; }
 
-        .letter h1 { font-size: 22px; color: #d00000; margin: 0; font-style: italic; }
-        .letter p { font-size: 16px; color: #444; line-height: 1.5; }
+        /* Game Target */
+        #game-target { font-size: 60px; cursor: pointer; transition: 0.1s; user-select: none; }
 
-        .seal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 50px;
-            height: 50px;
-            background: #ffb703;
-            border-radius: 50%;
-            z-index: 5;
-            transform: translate(-50%, -20%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            transition: opacity 0.3s;
-        }
-
-        .envelope-wrapper:hover .envelope::before { transform: rotateX(180deg); z-index: 1; }
-        .envelope-wrapper:hover .letter { transform: translateY(-130px) scale(1.1); z-index: 5; }
-        .envelope-wrapper:hover .seal { opacity: 0; }
-
+        /* Confetti */
         .confetti {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: #f00;
-            opacity: 0;
+            position: absolute; width: 8px; height: 8px;
+            animation: fall 3s linear forwards; z-index: 100;
         }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+        
+        @keyframes trophyGlow {
+            from { filter: drop-shadow(0 0 10px gold); }
+            to { filter: drop-shadow(0 0 30px #ffb703); }
         }
     </style>
 </head>
 <body>
-    <div id="confetti-container"></div>
-    <div class="envelope-wrapper" onmouseenter="createConfetti()">
-        <div class="envelope">
-            <div class="letter">
-                <h1>For My Favorite Person</h1>
-                <p>You make my heart skip a beat every single day. ❤️<br><br><strong>Happy Valentine's Day Teddy!</strong></p>
-            </div>
+
+    <div id="cursor"></div>
+
+    <div id="stage1" class="container">
+        <h1>Will you be my Valentine baby?</h1>
+        <div style="height: 120px; position: relative; margin-top: 20px;">
+            <button class="btn btn-yes" onclick="nextStage(2)">YES!</button>
+            <button id="noBtn" class="btn btn-no" onmouseover="moveNo()">No</button>
         </div>
-        <div class="seal">✉️</div>
+    </div>
+
+    <div id="stage2" class="container hidden">
+        <h1>I knew it! 😉</h1>
+        <p>No escaping me. Now, read this...</p>
+        <div style="background: #fffafa; padding: 20px; border-left: 5px solid var(--pink); border-radius: 10px; text-align: left;">
+            <p>Thank you for coming into my life. You make everything brighter and my heart is so incredibly full because of you. Thank you for always being there for me in my ups and Downs.I LOVE YOU SO MUCH TEDDY.❤️</p>
+        </div>
+        <button class="btn btn-yes" onclick="nextStage(3)">See Why I Love You →</button>
+    </div>
+
+    <div id="stage3" class="container hidden">
+        <h1>3 Random Reasons...</h1>
+        <div class="card-stack">
+            <div class="memory-card" style="--r: -5; z-index: 3;">How you make me as your 1st priority :)</div>
+            <div class="memory-card" style="--r: 2; z-index: 2;">How you care for me</div>
+            <div class="memory-card" style="--r: 5; z-index: 1;">You're my first ever boy best friend</div>
+        </div>
+        <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">(Hover over them!)</p>
+        <button class="btn btn-yes" onclick="nextStage(4)">Now, a mini-challenge!</button>
+    </div>
+
+    <div id="stage4" class="container hidden">
+        <h1>Catch the Heart!</h1>
+        <div id="score" style="color: var(--pink); font-weight: bold;">Hearts Caught: 0/5</div>
+        <div style="height: 150px; display: flex; justify-content: center; align-items: center;">
+            <div id="game-target" onclick="catchHeart()">💝</div>
+        </div>
+    </div>
+
+    <div id="stage5" class="container hidden">
+        <h1 style="font-size: 4rem; animation: trophyGlow 1s infinite alternate;">🏆</h1>
+        <h1 style="margin: 0;">OFFICIALLY...</h1>
+        <p style="font-size: 1.3rem;">The <strong>Best Boyfriend</strong> in the World.</p>
+        <p>I love you to the moon and back!    HAPPY VALENTINE'S DAY TEDDY!!!!!!</p>
     </div>
 
     <script>
-        function createConfetti() {
-            const container = document.getElementById('confetti-container');
-            const colors = ['#ff4d6d', '#ffb3c1', '#ffffff', '#ffb703', '#ff0000'];
-            for (let i = 0; i < 60; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = '-10px';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
-                confetti.style.opacity = '1';
-                if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
-                container.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 5000);
+        let score = 0;
+        const cursor = document.getElementById('cursor');
+
+        // Custom Cursor Movement
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        function nextStage(n) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById('stage' + n).classList.remove('hidden');
+            if (n === 2 || n === 5) spawnConfetti();
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        }
+
+        function catchHeart() {
+            score++;
+            document.getElementById('score').innerText = `Hearts Caught: ${score}/5`;
+            if (score >= 5) {
+                nextStage(5);
+            } else {
+                const target = document.getElementById('game-target');
+                target.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*100-50}px)`;
+            }
+        }
+
+        function spawnConfetti() {
+            for (let i = 0; i < 70; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.background = ['#ff4d6d', '#ffb3c1', '#ffd700'][Math.floor(Math.random()*3)];
+                c.style.top = '-10px';
+                c.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 3000);
             }
         }
     </script>
 </body>
 </html>
+
+            
